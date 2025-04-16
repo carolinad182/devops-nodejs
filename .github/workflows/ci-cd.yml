@@ -34,17 +34,15 @@ jobs:
 
     # SonarQube analysis (optional - comment out if not using SonarQube)
     - name: Run static code analysis
-      continue-on-error: true
+      #continue-on-error: true
       uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Generate code coverage
-      run: |
-        npm install --save-dev jest-coverage-badges
-        npx jest --coverage
-        npx jest-coverage-badges
+      run: npx jest --coverage
+
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
