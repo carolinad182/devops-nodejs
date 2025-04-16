@@ -1,12 +1,17 @@
-import { app, server } from '.'
+import { app, server } from './index.js'
 import request from 'supertest'
 import User from './users/model.js'
-import sequelize from './shared/database/database'
+import sequelize from './shared/database/database.js'
 import { Sequelize } from 'sequelize'
 
 describe('User', () => {
     let data
     let mockedSequelize
+
+    beforeAll(async () => {
+        // Initialize the database before tests
+        await sequelize.sync({ force: true })
+    })
 
     beforeEach(async () => {
         data = {
@@ -32,6 +37,7 @@ describe('User', () => {
     })
 
     afterAll(async () => {
+        await sequelize.close()
         server.close()
     })
 
