@@ -43,7 +43,7 @@ jobs:
     - name: Generate code coverage
       run: |
         npm install --save-dev jest-coverage-badges
-        npm test -- --coverage
+        npx jest --coverage
         npx jest-coverage-badges
 
     - name: Upload coverage to Codecov
