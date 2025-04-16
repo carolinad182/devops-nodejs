@@ -7,6 +7,7 @@ import { Sequelize } from 'sequelize'
 describe('User', () => {
     let data
     let mockedSequelize
+    let originalEnv
 
     beforeAll(async () => {
         // Initialize the database before tests
@@ -39,6 +40,36 @@ describe('User', () => {
     afterAll(async () => {
         await sequelize.close()
         server.close()
+    })
+
+    describe('Environment-specific behavior', () => {
+        beforeEach(() => {
+            originalEnv = process.env.NODE_ENV
+        })
+
+        afterEach(() => {
+            process.env.NODE_ENV = originalEnv
+        })
+
+        test('should not log in test environment', async () => {
+            process.env.NODE_ENV = 'test'
+            const consoleSpy = jest.spyOn(console, 'log')
+            
+            // Import index.js again to trigger the environment check
+            const { app: testApp } = await import('./index.js')
+            
+            expect(consoleSpy).not.toHaveBeenCalled()
+        })
+
+        test('should log in development environment', async () => {
+            process.env.NODE_ENV = 'development'
+            const consoleSpy = jest.spyOn(console, 'log')
+            
+            // Import index.js again to trigger the environment check
+            const { app: testApp } = await import('./index.js')
+            
+            expect(consoleSpy).toHaveBeenCalled()
+        })
     })
 
     test('Get users', async () => {

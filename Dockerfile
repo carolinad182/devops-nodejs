@@ -7,11 +7,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies safely
+RUN npm ci --ignore-scripts
 
-# Copy source code
-COPY . .
+# Copy only necessary files
+COPY index.js ./
+COPY shared/ ./shared/
+COPY users/ ./users/
+COPY .babelrc ./
 
 # Production stage
 FROM node:18.15.0-alpine
@@ -28,7 +31,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/index.js ./
 COPY --from=builder /app/shared ./shared
 COPY --from=builder /app/users ./users
-COPY --from=builder /app/.env ./
 COPY --from=builder /app/.babelrc ./
 
 # Create directory for SQLite database and set permissions

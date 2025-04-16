@@ -3,6 +3,9 @@ import { usersRouter } from "./users/router.js"
 import express from 'express'
 
 const app = express()
+// Disable Express version disclosure
+app.disable('x-powered-by')
+
 const PORT = 8000
 
 // Only log in development environment
