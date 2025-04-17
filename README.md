@@ -46,13 +46,13 @@ Se utiliza CodeCov para analizar la cobertura de pruebas.  Ejemplo de como se ve
 ### 🏗️ Build de la imagen
 
 ```bash
-docker build -t carolinad182/devops-nodejs:latest .
+docker build -t DOCKERHUB_USERNAME/devops-nodejs:latest .
 ```
 
 ### 📤 Push a Docker Hub
 
 ```bash
-docker push carolinad182/devops-nodejs:latest
+docker push DOCKERHUB_USERNAME/devops-nodejs:latest
 ```
 
 ---
