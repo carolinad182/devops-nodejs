@@ -1,0 +1,27 @@
+[1mdiff --git a/Dockerfile b/Dockerfile[m
+[1mindex fca9281..4fb8501 100644[m
+[1m--- a/Dockerfile[m
+[1m+++ b/Dockerfile[m
+[36m@@ -7,14 +7,19 @@[m [mWORKDIR /app[m
+ # Copy package files[m
+ COPY package*.json ./[m
+ [m
+[31m-# Install dependencies safely[m
+[31m-RUN npm ci --ignore-scripts[m
+[32m+[m[32mRUN npm ci --ignore-scripts \[m[41m[m
+[32m+[m[32m  && rm -rf node_modules/sqlite3 \[m[41m[m
+[32m+[m[32m  && npm install sqlite3 --ignore-scripts=false[m[41m[m
+ [m
+[31m-# Copy only necessary files[m
+[32m+[m[32m#Copy only necessary files[m[41m[m
+ COPY index.js ./[m
+ COPY shared/ ./shared/[m
+ COPY users/ ./users/[m
+ COPY .babelrc ./[m
+[32m+[m[32mCOPY node_modules/ ./node_modules/[m[41m[m
+[32m+[m[41m[m
+[32m+[m[32m# COPY . .[m[41m[m
+[32m+[m[41m[m
+ [m
+ # Production stage[m
+ FROM node:18.15.0-alpine[m

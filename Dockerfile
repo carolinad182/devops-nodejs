@@ -7,14 +7,19 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies safely
-RUN npm ci --ignore-scripts
+RUN npm ci --ignore-scripts \
+  && rm -rf node_modules/sqlite3 \
+  && npm install sqlite3 --ignore-scripts=false
 
-# Copy only necessary files
+#Copy only necessary files
 COPY index.js ./
 COPY shared/ ./shared/
 COPY users/ ./users/
 COPY .babelrc ./
+COPY node_modules/ ./node_modules/
+
+# COPY . .
+
 
 # Production stage
 FROM node:18.15.0-alpine
