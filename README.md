@@ -2,6 +2,10 @@
 
 This is a simple application to be used in the technical test of DevOps.
 
+## 📊 Project Architecture
+
+![Architecture Diagram](assets/devopsdiagram.png)
+
 ## Getting Started
 
 ### Prerequisites
