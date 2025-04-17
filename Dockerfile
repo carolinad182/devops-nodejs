@@ -16,7 +16,7 @@ COPY index.js ./
 COPY shared/ ./shared/
 COPY users/ ./users/
 COPY .babelrc ./
-COPY node_modules/ ./node_modules/
+
 
 # COPY . .
 
